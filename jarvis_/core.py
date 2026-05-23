@@ -9,7 +9,8 @@ class JarvisAI:
         self.voice = VoiceAssistant()
         self.nlp = CommandProcessor()
         self.running = False
-    
+        self.calculator = Calculator()
+        
     def process_command(self, command):
         parsed = self.nlp.parse_command(command)
         command_type = parsed.get('type')
@@ -81,3 +82,11 @@ Commands:
             response = self.process_command(command)
             self.voice.speak(response)
         self.running = False
+
+   def process_command(self, command):
+    # ... existing code
+    if 'calculate' in command.lower() or 'math' in command.lower():
+        # Extract the math part
+        parts = command.lower().split('calculate')
+        if len(parts) > 1:
+            return self.calculator.calculate(parts[1].strip())
